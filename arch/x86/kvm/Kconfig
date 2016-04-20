@@ -98,7 +98,7 @@ config KVM_DEVICE_ASSIGNMENT
 
 config VMCS_SYSFS
 	tristate "Sysfs interface to VMCS"
-	default n
+	default m
 	---help---
 		Provides a sysfs interface to control the VMCS. Also dumps the
 		contents of the VMCS.
