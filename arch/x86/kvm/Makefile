@@ -21,3 +21,4 @@ obj-$(CONFIG_KVM)	+= kvm.o
 obj-$(CONFIG_KVM_INTEL)	+= kvm-intel.o
 obj-$(CONFIG_KVM_AMD)	+= kvm-amd.o
 obj-m			+= hello.o
+obj-$(CONFIG_VMCS_SYSFS) += vmcs-sysfs.o
