@@ -96,13 +96,6 @@ config KVM_DEVICE_ASSIGNMENT
 
 	  If unsure, say Y.
 
-config VMCS_SYSFS
-	tristate "Sysfs interface to VMCS"
-	default m
-	---help---
-		Provides a sysfs interface to control the VMCS. Also dumps the
-		contents of the VMCS.
-
 # OK, it's a little counter-intuitive to do this, but it puts it neatly under
 # the virtualization menu.
 source drivers/vhost/Kconfig
