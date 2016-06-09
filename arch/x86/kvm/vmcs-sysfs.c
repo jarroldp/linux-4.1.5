@@ -34,55 +34,55 @@ int wd_guest_activity_state;
  */
 static int vmcs_sysfs_init(void)
 {
-		//char watch_event_buf[WATCH_EVENT_BUF_LEN];
-		//int len, i = 0;
+	//char watch_event_buf[WATCH_EVENT_BUF_LEN];
+	//int len, i = 0;
 
-		struct vmcs *curr_vmcs;
+	struct vmcs *curr_vmcs;
 
-		asm volatile("VMPTRST %0" : "=m"(curr_vmcs));
-		asm volatile("VMREAD %0, %1"
-						: "=r"(guest_activity_state)
-						: "r"(enc_guest_activity_state)
-						);
-		printk(KERN_INFO "In vmcs_sysfs_init, guest activity state = %lu\n",
-						guest_activity_state);
+	asm volatile("VMPTRST %0" : "=m"(curr_vmcs));
+	asm volatile("VMREAD %0, %1"
+			: "=r"(guest_activity_state)
+			: "r"(enc_guest_activity_state)
+			);
+	printk(KERN_INFO "In vmcs_sysfs_init, guest activity state = %lu\n",
+			guest_activity_state);
 
-		/*
-		ifd = inotify_init();
-		if (ifd < 0) {
-				printk(KERN_ERR "In vmcs_sysfs_init, failed to init inotify.\n");
+	/*
+	ifd = inotify_init();
+	if (ifd < 0) {
+		printk(KERN_ERR "In vmcs_sysfs_init, failed to init inotify.\n");
+	} else {
+		wd_guest_activity_state = inotify_add_watch(ifd,
+				"/sys/module/vmcs_sysfs/parameters/guest_activity_state",
+				IN_ACCESS);
+		if (wd_guest_activity_state < 0) {
+			printk(KERN_ERR "In vmcs_sysfs_init, failed to init inotify \
+					watch for guest_activity_state");
 		} else {
-				wd_guest_activity_state = inotify_add_watch(ifd,
-								"/sys/module/vmcs_sysfs/parameters/guest_activity_state",
-								IN_ACCESS);
-				if (wd_guest_activity_state < 0) {
-						printk(KERN_ERR "In vmcs_sysfs_init, failed to init inotify \
-										watch for guest_activity_state");
-				} else {
-						len = read(ifd, watch_event_buf, WATCH_EVENT_BUF_LEN);
-						if (len < 0) {
-								printk(KERN_ERR "In vmcs_sysfs_init, inotify read failed.\n");
-						}
+			len = read(ifd, watch_event_buf, WATCH_EVENT_BUF_LEN);
+			if (len < 0) {
+				printk(KERN_ERR "In vmcs_sysfs_init, inotify read failed.\n");
+			}
 
-						while (i < len) {
-								struct inotify_event *watch_event;
+			while (i < len) {
+				struct inotify_event *watch_event;
 
-								watch_event = (struct inotify_event *)&watch_event_buf[i];
+				watch_event = (struct inotify_event *)&watch_event_buf[i];
 
-								printk(KERN_INFO "wd=%d mask=%u cookie=%u len=%u\n",
-												watch_event->wd, watch_event->mask,
-												watch_event->cookie, watch_event->len);
+				printk(KERN_INFO "wd=%d mask=%u cookie=%u len=%u\n",
+						watch_event->wd, watch_event->mask,
+						watch_event->cookie, watch_event->len);
 
-								if (watch_event->len)
-										printk(KERN_INFO "name=%s\n", event->name);
+				if (watch_event->len)
+					printk(KERN_INFO "name=%s\n", event->name);
 
-								i += WATCH_EVENT_SIZE + watch_event->len;
-						}
-				}
+				i += WATCH_EVENT_SIZE + watch_event->len;
+			}
 		}
-		*/
+	}
+	*/
 
-		return 0;
+	return 0;
 }
 
 /*
@@ -90,17 +90,17 @@ static int vmcs_sysfs_init(void)
  */
 static void vmcs_sysfs_exit(void)
 {
-		//int ret;
+	//int ret;
 
-		printk(KERN_INFO "In vmcs_sysfs_exit, guest activity state = %lu\n",
-						guest_activity_state);
+	printk(KERN_INFO "In vmcs_sysfs_exit, guest activity state = %lu\n",
+			guest_activity_state);
 
-		/*
-		ret = inotify_rm_watch(ifd, wd_guest_activity_state);
-		if (ret) {
-				printk(KERN_ERR "In vmcs_sysfs_exit, failed to shut down inotify.\n");
-		}
-		*/
+	/*
+	ret = inotify_rm_watch(ifd, wd_guest_activity_state);
+	if (ret) {
+		printk(KERN_ERR "In vmcs_sysfs_exit, failed to shut down inotify.\n");
+	}
+	*/
 }
 
 module_init(vmcs_sysfs_init);
